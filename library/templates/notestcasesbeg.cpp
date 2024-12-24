@@ -80,6 +80,7 @@ template <class T> inline void write(T x)
 }
 template <class T> inline void write(T x, char ch) { write(x), putchar(ch); }
 }
+using namespace FastIO;
 
 template <typename T> ostream& operator<<(ostream& out, vector<T>& a)
 {
