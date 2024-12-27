@@ -9,6 +9,7 @@ uint64_t base_pow[MAXLEN];
 
 int64_t modmul(uint64_t a, uint64_t b)
 {
+    // can cast to 128 bits to multiply
     uint64_t l1 = (uint32_t)a, h1 = a >> 32, l2 = (uint32_t)b, h2 = b >> 32;
     uint64_t l = l1 * l2, m = l1 * h2 + l2 * h1, h = h1 * h2;
     uint64_t ret
@@ -56,14 +57,18 @@ struct PolyHash {
         : PolyHash(vector<char>(str, str + strlen(str)))
     {
     }
+    PolyHash(const string& s)
+        : PolyHash(vector<char>(s.begin(), s.end()))
+    {
+    }
 
-    uint64_t get_hash(int l, int r) // [l,r)
+    uint64_t find_hash(int l, int r) // [l,r)
     {
         int64_t h = pref[r] - modmul(base_pow[r - l], pref[l]);
         return h < 0 ? h + mod : h;
     }
 
-    uint64_t rev_hash(int l, int r) //[l,r)
+    uint64_t find_rev_hash(int l, int r) //[l,r)
     {
         int64_t h = suff[l + 1] - modmul(base_pow[r - l], suff[r + 1]);
         return h < 0 ? h + mod : h;

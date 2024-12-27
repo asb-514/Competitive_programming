@@ -33,11 +33,6 @@ typedef string str;
 #define dbgarr(...)
 #endif
 
-template <class T> using minpq = priority_queue<T, vector<T>, greater<T>>;
-template <class T> using maxpq = priority_queue<T>;
-template <class T> bool ckmin(T& a, const T& b) { return b < a ? a = b, 1 : 0; }
-template <class T> bool ckmax(T& a, const T& b) { return a < b ? a = b, 1 : 0; }
-
 namespace FastIO {
 const int mxn = 1 << 16;
 char buf[mxn], *S = NULL, *T = NULL;
@@ -49,6 +44,10 @@ inline char Getchar()
 template <typename T> void read(T& x)
 {
     x = 0;
+#ifdef ONPC
+	cin >> x; 
+	return;
+#endif
     char c = 0;
     int f = 0;
     for (c = Getchar(); c != EOF && (c < '0' || c > '9'); c = Getchar())
@@ -58,6 +57,10 @@ template <typename T> void read(T& x)
 }
 void read(string& s)
 {
+#ifdef ONPC
+	cin >> s;
+	return;
+#endif
     char c = Getchar();
     do {
         s += c;
@@ -78,6 +81,11 @@ template <class T> inline void write(T x)
     if (x > 9) write(x / 10);
     putchar(x % 10 + '0');
 }
+inline void write(const string& s)
+{
+    for (char c : s) putchar(c);
+}
+inline void write(char c) { putchar(c); }
 template <class T> inline void write(T x, char ch) { write(x), putchar(ch); }
 }
 using FastIO::read;
@@ -88,6 +96,22 @@ template <typename T> ostream& operator<<(ostream& out, vector<T>& a)
     for (auto& x : a) out << x << ' ';
     return out;
 };
+template <class T> using minpq = priority_queue<T, vector<T>, greater<T>>;
+template <class T> using maxpq = priority_queue<T>;
+template <class T> bool ckmin(T& a, const T& b) { return b < a ? a = b, 1 : 0; }
+template <class T> bool ckmax(T& a, const T& b) { return a < b ? a = b, 1 : 0; }
+/** @return a random integer between 0 and INT64_MAX */
+long long rng()
+{
+    static std::mt19937 gen(
+        std::chrono::steady_clock::now().time_since_epoch().count());
+    return std::uniform_int_distribution<long long>(0, INT64_MAX)(gen);
+}
+void file()
+{
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+}
 
 int solve() { 
 \t$0
@@ -106,7 +130,4 @@ int32_t main()
         cerr << "__________________________\n";
 #endif
     }
-#ifdef ONPC
-    cerr << "\nfinished in " << (ld)clock() / CLOCKS_PER_SEC << " sec\n";
-#endif
 }
