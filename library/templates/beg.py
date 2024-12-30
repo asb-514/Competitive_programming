@@ -1,6 +1,7 @@
 import sys
 
 input = sys.stdin.readline
+write = sys.stdout.write
 
 
 ############ ---- Input Functions ---- ############

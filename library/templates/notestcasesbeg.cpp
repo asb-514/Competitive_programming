@@ -33,6 +33,7 @@ typedef string str;
 #define dbgarr(...)
 #endif
 
+// Only for int and ll
 namespace FastIO {
 const int mxn = 1 << 16;
 char buf[mxn], *S = NULL, *T = NULL;
@@ -45,8 +46,8 @@ template <typename T> void read(T& x)
 {
     x = 0;
 #ifdef ONPC
-	cin >> x;
-	return;
+    cin >> x;
+    return;
 #endif
     char c = 0;
     int f = 0;
@@ -54,18 +55,6 @@ template <typename T> void read(T& x)
         if (c == '-') f = 1;
     while (c >= '0' && c <= '9') x = x * 10 + (c & 15), c = Getchar();
     if (f) x = -x;
-}
-void read(string& s)
-{
-#ifdef ONPC
-	cin >> s;
-	return;
-#endif
-    char c = Getchar();
-    do {
-        s += c;
-        c = Getchar();
-    } while (c != '\n' && c != ' ' && c != EOF);
 }
 template <typename T> void read(vector<T>& a)
 {
@@ -81,11 +70,6 @@ template <class T> inline void write(T x)
     if (x > 9) write(x / 10);
     putchar(x % 10 + '0');
 }
-inline void write(const string& s)
-{
-    for (char c : s) putchar(c);
-}
-inline void write(char c) { putchar(c); }
 template <class T> inline void write(T x, char ch) { write(x), putchar(ch); }
 }
 using namespace FastIO;
