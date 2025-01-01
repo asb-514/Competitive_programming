@@ -24,8 +24,12 @@ all : $(TARGET) test
 .PHONY: all
 
 clean:
-	rm -rf $(CLEAN_TARGETS) $(TARGET).dSYM
+	-rm -rf $(CLEAN_TARGETS) $(TARGET).dSYM
 .PHONY: clean
+
+veryclean:
+	-rm -rf $(CLEAN_TARGETS) $(TARGET).dSYM brute* gen* s.sh compile.sh in* out*
+.PHONY: veryclean
 
 $(PCH_PCH): $(PCH)
 	$(CXX) -x c++-header $(CXXFLAGS) $< -o $@
@@ -36,13 +40,13 @@ $(TARGET): $(TARGET).cpp $(PCH_PCH)
 export TIME=\n  real\t%es\n  user\t%Us\n  sys\t%Ss\n  mem\t%MKB
 
 %.res: $(TARGET) %.in
-	\time ./main < $*.in > $*.res
+	./main < $*.in > $*.res
 ifeq ($(DEBUG),true)
 	@echo "Built with DEBUG flags enabled, code may be slower than normal"
 endif
 
 %.res_compare: %.res %.out
-	diff $*.res $*.out
+	-diff $*.res $*.out
 
 test: $(RESULT) $(TESTRULE)
 .PHONY: test
