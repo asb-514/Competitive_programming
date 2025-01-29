@@ -73,12 +73,15 @@ template <class T> inline void write(T x)
 template <class T> inline void write(T x, char ch) { write(x), putchar(ch); }
 }
 using namespace FastIO;
-
-template <typename T> ostream& operator<<(ostream& out, vector<T>& a)
+template <class T> void vwrite(vector<T>& ans)
 {
-    for (auto& x : a) out << x << ' ';
-    return out;
-};
+    N (j, sz(ans)) {
+        if (j == sz(ans) - 1) {
+            write(ans[j], nl);
+        } else write(ans[j], ' ');
+    }
+    return;
+}
 template <class T> using minpq = priority_queue<T, vector<T>, greater<T>>;
 template <class T> using maxpq = priority_queue<T>;
 template <class T> bool ckmin(T& a, const T& b) { return b < a ? a = b, 1 : 0; }
@@ -97,8 +100,7 @@ void file()
 }
 
 int solve() { 
-\t$0
-\treturn 0; 
+	return 0;
 }
 
 int32_t main()

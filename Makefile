@@ -1,16 +1,17 @@
+TARGET := main
+EXECUTE := ./$(TARGET)
+CLEAN_TARGETS := $(TARGET)
 DEBUG := true
+
 CXX := clang++
 PCH := ~/Documents/contest/pch/bits/stdc++.h
 PCH_PCH := $(PCH).pch
 CXXFLAGS := -std=c++20 -O2 -Wall -Wextra -pedantic -Wshadow 
 DEBUG_CXXFLAGS := -DONPC -g -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow 
 DEBUG_CXXFLAGS += -fno-sanitize-recover=all -fstack-protector-all -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC
-TARGET := main
 
-CLEAN_TARGETS := $(TARGET)
 
 CLEAN_TARGETS += $(PCH_PCH)
-
 ifeq ($(DEBUG),true)
 CXXFLAGS += $(DEBUG_CXXFLAGS)
 endif
@@ -39,8 +40,15 @@ $(TARGET): $(TARGET).cpp $(PCH_PCH)
 
 export TIME=\n  real\t%es\n  user\t%Us\n  sys\t%Ss\n  mem\t%MKB
 
+run: $(TARGET)
+	\time $(EXECUTE)
+ifeq ($(DEBUG),true)
+	@echo "Built with DEBUG flags enabled, code may be slower than normal"
+endif
+.PHONY: run
+
 %.res: $(TARGET) %.in
-	./main < $*.in > $*.res
+	\time $(EXECUTE) < $*.in > $*.res
 ifeq ($(DEBUG),true)
 	@echo "Built with DEBUG flags enabled, code may be slower than normal"
 endif
